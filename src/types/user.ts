@@ -17,3 +17,8 @@ export type UpdateUserParams = {
   firstName: string;
   lastName: string;
 };
+
+export type AuthUserParams = {
+  email: string;
+  password: string;
+};

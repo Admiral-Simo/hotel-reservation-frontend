@@ -1,14 +1,28 @@
 "use client";
 import { FormEvent, useState } from "react";
+import { useMutation } from "react-query";
+import type { AuthUserParams } from "@/types/user";
+import api from "@/api/api";
 
 function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e: FormEvent) => {
-    alert(JSON.stringify({ email, password }));
+  const loginMutation = useMutation((user: AuthUserParams) =>
+    api.post("auth", user),
+  );
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     // Add your form submission logic here
+
+    try {
+      const response = await loginMutation.mutateAsync({ email, password });
+      console.log("login successfully", response);
+      // TODO: redirect to main page
+    } catch (err) {
+      console.log("login failed", err);
+    }
   };
 
   return (
