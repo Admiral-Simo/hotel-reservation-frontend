@@ -1,13 +1,13 @@
-interface Hotel {
+export type Hotel = {
   id: string;
   name: string;
   location: string;
   rooms: string[];
   rating: number;
-}
+};
 
-interface UpdateHotelParams {
+export type UpdateHotelParams = {
   name: string;
   location: string;
   rooms: string[];
-}
+};

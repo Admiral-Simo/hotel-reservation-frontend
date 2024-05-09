@@ -1,19 +1,19 @@
-interface User {
+export type User = {
   id: string;
   firstName: string;
   lastName: string;
   email: string;
   isAdmin: boolean;
-}
+};
 
-interface CreateUserParams {
+export type CreateUserParams = {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
-}
+};
 
-interface UpdateUserParams {
+export type UpdateUserParams = {
   firstName: string;
   lastName: string;
-}
+};

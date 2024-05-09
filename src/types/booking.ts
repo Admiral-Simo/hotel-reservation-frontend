@@ -1,4 +1,4 @@
-interface Booking {
+export type Booking = {
   id: string;
   UserID: string;
   RoomID: string;
@@ -6,10 +6,10 @@ interface Booking {
   FromDate: string;
   TillDate: string;
   Canceled: boolean;
-}
+};
 
-interface BookRoomParams {
+export type BookRoomParams = {
   FromDate: string;
   TillDate: string;
   NumPersons: number;
-}
+};

@@ -1,9 +1,9 @@
 type Size = "small" | "medium" | "large";
 
-interface Room {
+export type Room = {
   id: string;
   size: Size;
   seaSide: boolean;
   price: number;
   hotelID: string;
-}
+};
