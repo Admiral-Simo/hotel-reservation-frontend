@@ -17,8 +17,12 @@ function SignIn() {
     // Add your form submission logic here
 
     try {
-      const response = await loginMutation.mutateAsync({ email, password });
-      console.log("login successfully", response);
+      const { data: user } = await loginMutation.mutateAsync({
+        email,
+        password,
+      });
+      alert("login successfully" + JSON.stringify(user));
+      // TODO: set the user to a global state to make requests later on
       // TODO: redirect to main page
     } catch (err) {
       console.log("login failed", err);
