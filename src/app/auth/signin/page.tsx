@@ -5,12 +5,14 @@ import type { AuthUserParams } from "@/types/user";
 import api from "@/api/api";
 import { Button } from "@/components/ui/button";
 import { useUser } from "@/context/UserContext";
+import { useRouter } from "next/navigation";
 
 function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [show, setShow] = useState(false);
   const { setUser } = useUser();
+  const router = useRouter();
 
   const loginMutation = useMutation((user: AuthUserParams) =>
     api.post("auth", user),
@@ -25,10 +27,10 @@ function SignIn() {
         email,
         password,
       });
-      alert("login successfully" + JSON.stringify(user?.user));
       // set the user to a global state to make requests later on
       setUser(user?.user);
       // TODO: redirect to main page
+      router.push("/");
     } catch (err) {
       console.log("login failed", err);
     }
