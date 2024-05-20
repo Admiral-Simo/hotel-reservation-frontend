@@ -3,10 +3,14 @@ import { FormEvent, useState } from "react";
 import { useMutation } from "react-query";
 import type { AuthUserParams } from "@/types/user";
 import api from "@/api/api";
+import { Button } from "@/components/ui/button";
+import { useUser } from "@/context/UserContext";
 
 function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [show, setShow] = useState(false);
+  const { setUser } = useUser();
 
   const loginMutation = useMutation((user: AuthUserParams) =>
     api.post("auth", user),
@@ -21,8 +25,9 @@ function SignIn() {
         email,
         password,
       });
-      alert("login successfully" + JSON.stringify(user));
-      // TODO: set the user to a global state to make requests later on
+      alert("login successfully" + JSON.stringify(user?.user));
+      // set the user to a global state to make requests later on
+      setUser(user?.user);
       // TODO: redirect to main page
     } catch (err) {
       console.log("login failed", err);
@@ -37,12 +42,6 @@ function SignIn() {
       >
         <h2 className="text-2xl mb-4 font-bold text-gray-800">Sign In</h2>
         <div className="mb-4">
-          <label
-            htmlFor="email"
-            className="block text-gray-700 font-semibold mb-2"
-          >
-            Email
-          </label>
           <input
             id="email"
             placeholder="Enter your email"
@@ -52,28 +51,32 @@ function SignIn() {
             value={email}
           />
         </div>
-        <div className="mb-6">
-          <label
-            htmlFor="password"
-            className="block text-gray-700 font-semibold mb-2"
-          >
-            Password
-          </label>
+        <div className="mb-6 relative">
           <input
             id="password"
             placeholder="Enter your password"
             className="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500"
-            type="password"
+            type={show ? "text" : "password"}
             onChange={(e) => setPassword(e.target.value)}
             value={password}
           />
+          <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
+            <input
+              type="checkbox"
+              id="show"
+              name="show"
+              checked={show}
+              onChange={(e) => setShow(e.target.checked)}
+              className="form-checkbox h-5 w-5 text-blue-500 border-gray-300 rounded focus:ring-blue-500"
+            />
+          </div>
         </div>
-        <button
+        <Button
           type="submit"
-          className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline"
+          className="w-full text-white font-semibold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline"
         >
           Sign In
-        </button>
+        </Button>
       </form>
     </div>
   );
